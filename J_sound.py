@@ -10,7 +10,12 @@ class JarvisVoice:
         print(f"JARVIS says: {text}")
         self.stop_event = False
 
-        threading.Thread(target=self._internal_speak, args=(text,), daemon=True).start()
+        thread = threading.Thread(target=self._internal_speak, args=(text,), daemon=True)
+        thread.start()
+
+
+
+
 
     def _internal_speak(self, text):
         engine = pyttsx3.init()

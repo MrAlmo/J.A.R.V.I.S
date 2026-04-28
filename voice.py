@@ -9,7 +9,9 @@ import pyautogui
 import time
 import psutil
 from pyautogui import moveTo
-from brain import get_ai_response
+
+from actions import ACTIONS
+from brain import get_ai_response, get_intent
 from J_sound import *
 
 
@@ -58,6 +60,7 @@ def proceed_commnad(command):
         return
 
     game = "dota2.exe"
+
 
     if "сосать" in command or "открыть доту" in command:
         jarvis.speak("Хорошо сэр, открываю Доту")
@@ -184,9 +187,15 @@ def proceed_commnad(command):
 
     else:
         # print("Sorry, I don't understand.")
-        print("J.A.R.V.I.S working...")
-        answer = get_ai_response(command)
-        jarvis.speak(answer)
+        intent = get_intent(command)
+        print(f"Распознано намерение: {intent}")
+
+        if intent in ACTIONS and intent != "none":
+            ACTIONS[intent]()
+        else:
+            print("J.A.R.V.I.S working...")
+            answer = get_ai_response(command)
+            jarvis.speak(answer)
 
 def open_file(path):
     if os.path.exists(path):

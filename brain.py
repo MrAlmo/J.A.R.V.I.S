@@ -15,3 +15,23 @@ def get_ai_response(user_text):
         return ai_response
     except Exception as e:
         return f"Something wrong with intellect module: {e}"
+
+
+def get_intent(user_text):
+    prompt = f"""
+    Ты — модуль управления Джарвиса. Твоя задача — понять, чего хочет пользователь.
+    Доступные команды:
+    - open_dota: если пользователь хочет поиграть, запустить доту или открыть игру.
+    - close_dota: если пользователь хочет закрыть игру или говорит что проиграл.
+    - stop_program: если пользователь хочет остановить работу этого скрипта, лучше переспросить "Вы точно хотите остановить эту программу?".
+    - none: если это просто вопрос или беседа.
+
+    Ответь ТОЛЬКО названием команды. Никаких лишних слов.
+    Текст пользователя: "{user_text}"
+    """
+
+    response = ollama.chat(model='llama3', messages=[
+        {'role': 'user', 'content': prompt},
+    ])
+
+    return response['message']['content'].strip().lower()
