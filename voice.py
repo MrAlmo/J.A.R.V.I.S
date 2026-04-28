@@ -187,15 +187,16 @@ def proceed_commnad(command):
 
     else:
         # print("Sorry, I don't understand.")
-        intent = get_intent(command)
-        print(f"Распознано намерение: {intent}")
+        if command.startswith("джарвис"):
+            intent = get_intent(command)
+            print(f"Распознано намерение: {intent}")
 
-        if intent in ACTIONS and intent != "none":
-            ACTIONS[intent]()
-        else:
-            print("J.A.R.V.I.S working...")
-            answer = get_ai_response(command)
-            jarvis.speak(answer)
+            if intent in ACTIONS and intent != "none":
+                ACTIONS[intent]()
+            else:
+                print("J.A.R.V.I.S working...")
+                answer = get_ai_response(command)
+                jarvis.speak(answer)
 
 def open_file(path):
     if os.path.exists(path):
